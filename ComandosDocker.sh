@@ -1,6 +1,9 @@
 docker run -d -p 6379:6379 --name redisservice redis:6.0.9-alpine
 
-docker run -it --detach --name cloud-containers-mysql -p 3308:3306 -v mysql-volume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=CloudContainers202122 -d mysql:latest
+docker run -it --name cloud-containers-mysql -p 3308:3306 -v mysql-volume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=CloudContainers202122 -d mysql:8.0.27
+
+docker run -it --name cloud-containers-mariadb -p 3303:3306 -e MYSQL_ROOT_PASSWORD=CloudContainers202122 -d mariadb:10.3.32
+
 
 docker network create mongodb-net
 docker run -d -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password --name mongodb --net mongodb-net mongo
