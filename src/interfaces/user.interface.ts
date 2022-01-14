@@ -1,5 +1,22 @@
-export interface User {
+export interface GetUsers {
+  userData: UserData[] | UserData;
+  logged: boolean;
   userId: string;
+  rol: string;
+  
+}
+
+export interface GetUser {
+  userData: UserData;
+  logged: boolean;
+  userId: string;
+  rol: string;
+  
+}
+
+export interface UserData {
+  userId: string;
+  rol: string;
   name: string;
   firstsurname: string;
   secondsurname: string;
