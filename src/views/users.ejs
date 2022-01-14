@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include("./partials/mainViews/head.ejs") %>
+    <link rel="stylesheet" href="/css/users.css" />
+    <title>Gestión de usuarios</title>
+  </head>
+  <body>
+    <!-- BARRA DE NAVEGACIÓN -->
+    <%- include("./partials/mainViews/navbar.ejs", {page_name:"Usuarios"}) %>
+    <div class="col-xl-12" style="text-align: center; margin-top: 10px;">
+      <h1>Gestión de usuarios</h1>
+    </div>
+    <div class="container" style="align-items: center;">
+      <ul class="users-list col-12">
+        <h3 class="text-center mt-5">Usuarios administradores</h3>
+        <%userData.forEach(function(user) {%>
+          <%if(user.rol == "admin"){ %>
+            <li>
+              <%= user.name %> <%= user.firstsurname %> <%= user.secondsurname %>  -  <%= user.email %>
+              <a class="users-list-link delete-user" userId="<%= user.userId %>"
+                ><i class="far fa-trash-alt"></i
+              ></a>
+            </li>
+          <% } %>
+        <% }) %>
+      </ul>
+      <ul class="users-list col-12">
+        <h3 class="text-center mt-5">Usuarios</h3>
+        <%userData.forEach(function(user) {%>
+          <%if(user.rol != "admin"){ %>
+            <li>
+              <%= user.name %> <%= user.firstsurname %> <%= user.secondsurname %>  -  <%= user.email %>
+              <a class="users-list-link delete-user" userId="<%= user.userId %>"
+                ><i class="far fa-trash-alt"></i
+              ></a>
+            </li>
+          <% } %>
+        <% }) %>
+      </ul>
+    </div>
+    <!-- ZONA DE SCRIPTS -->
+    <%- include("./partials/mainViews/scripts.ejs") %>
+    <!-- ZONA DE PIE DE PÁGINA -->
+    <%- include("./partials/mainViews/footer.ejs") %>
+    <script src="/js/adminUsers.js"></script>
+    <script src="/js/httpRequests.js"></script>
+  </body>
+</html>
