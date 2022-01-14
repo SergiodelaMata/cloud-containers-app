@@ -1,0 +1,48 @@
+<div id="videojuegos" class="align-items-center">
+    <div class="col-xl-12" style="text-align: center; margin-top: 10px;">
+        <h1>Videojuegos disponibles</h1>
+    </div>
+    <br>
+    <div class="container" style="align-items: center;">
+        <% var counter = 0 %>
+        <% var i = 0 %>
+        <% var lengthList = productData.length %>
+        <% productData.forEach(function(product) { %>
+            <% if (counter == 0){ %>
+                <div class="row">
+            <% } %>
+                <div id="<%= product.productId %>" class="card col-sm">
+                    <img class="img-fluid" src="<%= product.image %>">
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align: center;"> <%= product.name %></h5>
+                        <div class="container" style="align-items: center;">
+                            <div class="row">
+                                <p class="card-text font-weight-bold" style="width: 48%; margin-right: 5px; text-align:left;"> <%= product.price %> Є</p>
+                                <p class="card-text" style="width: 48%; text-align:right;"> Unidades: <%= product.quantity %></p>
+                            </div>
+                        </div>
+                        <div style="align-items: center;">
+                            <a href="#" class="btn btn-primary" style="width:48%; margin-right: 1%;">Comprar</a>
+                            <a href="#" class="btn btn-dark" style="width:48%;">Vender</a>
+                        </div>
+                        <div style="text-align: center; margin-top: 10px;">
+                            <a href="/products/<%=product.productId%>" class="btn btn-secondary">Más información</a>
+                        </div>
+                    </div>    
+                </div>   
+            <% i++%>
+            <% if (counter >= 0 && counter < 3 && i < lengthList){ %>
+                <% counter++%>
+            <% } else if(counter >= 2 && i < lengthList){%>
+                </div>
+                <% counter = 0%>
+            <% } else{ %>
+                <% for(var j = 0; j < 3 - counter; j++){%>
+                    <div class="card col-sm"></div>
+                <% } %>
+                </div>
+            <% } %>
+
+        <%});%>
+    </div>
+</div>

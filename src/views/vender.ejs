@@ -8,6 +8,47 @@
   <body>
     <!-- BARRA DE NAVEGACIÓN -->
     <%- include("./partials/mainViews/navbar.ejs", {page_name:"Vender"}) %>
+    <div class="container" style="text-align: center; margin-top: 10px;">
+      <h1>Seleccione el producto que quiere vender:</h1>
+    </div>
+    <div class="container" style="text-align: center; margin-top: 10px;">
+      <div class="card col-sm">
+        <form id="form-product">
+          <div class="row form-inline" style="margin-top:30px;">
+            <label for="productName" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Nombre del videojuego: </label>
+            <select id="productName" style="margin-right:20px;">
+              <option value="-">-</option>
+              <option value="Otro">Otro</option>
+            </select>
+            <label for="productNameOther" class="card-title font-weight-bold" style="margin-right:5px;"> Nombre del videojuego no listado:</label>
+            <input id="productNameOther" type="text" value="">
+          </div>
+          <div class="row form-inline" style="margin-top:30px;">
+            <label for="productDescription" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Descripción del videojuego: </label>
+            <textarea id="productDescription" style="margin-right:20px;" rows="4" cols="70"  value=""></textarea>
+          </div>
+          <div class="row form-inline" style="margin-top:30px;">
+            <label for="productImage" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Imagen del videojuego: </label>
+            <input id="productImage" type="file">
+          </div>
+          <div class="row form-inline" style="margin-top:30px;">
+            <label for="quantity" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Número de unidades a vender: </label>
+            <input id="quantity" type="number" value="">
+          </div>
+          <div class="row form-inline" style="margin-top:30px;">
+            <label for="price" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Precio por el juego: </label>
+            <input id="price" type="number" value="" min="1" max="80">
+            <label for="price">Є</p>
+          </div>
+
+          <div style="margin-bottom: 30px;">
+            <button type="submit" id="sendForm" class="btn btn-dark form-button">
+                Vender
+              </button>
+          </div>
+        </form>
+      </div>
+    </div>
     <!-- ZONA DE SCRIPTS -->
     <%- include("./partials/mainViews/scripts.ejs") %>
     <!-- ZONA DE PIE DE PÁGINA -->

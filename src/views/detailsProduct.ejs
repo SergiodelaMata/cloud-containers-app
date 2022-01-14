@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include("./partials/mainViews/head.ejs") %>
+    <link rel="stylesheet" href="/css/products.css" />
+    <title><%=productData.name%></title>
+  </head>
+  <body>
+    <!-- BARRA DE NAVEGACIÓN -->
+    <%- include("./partials/mainViews/navbar.ejs", {page_name:"Videojuegos"}) %>
+    <div class="container" style="text-align: center; margin-top: 10px;">
+        <h1>Detalles del videojuego</h1>
+    </div>
+    <div class="container" style="text-align: center; margin-top: 10px;">
+        <div id="<%= productData.productId %>" class="card col-sm">
+            <div class="row">
+                <img class="img-fluid" src="<%=productData.image%>">
+                <div class="card-body">
+                    <div class="row form-inline" style="margin-bottom: 10px;">
+                        <label for="productName" class="card-title font-weight-bold" style="margin-right:5px;"> Nombre: </label>
+                        <input id="productName" class="no-border" readonly type="text" value="<%=productData.name%>">
+                    </div>
+                    <div class="row form-inline" style="margin-bottom: 10px;">
+                        <label for="productDescription" class="card-title font-weight-bold" style="margin-right:5px;"> Descripción: </label>
+                        <textarea id="productDescription" readonly rows="4" cols="70" value="<%=productData.description%>"></textarea>
+                    </div>
+                    <div class="row form-inline" style="margin-bottom: 10px;">
+                        <label for="productCompany" class="card-title font-weight-bold" style="margin-right:5px;"> Compañía: </label>
+                        <input id="productCompany" class="no-border" readonly type="text" value="<%=productData.company%>">
+                    </div>
+                    <div class="row form-inline" style="margin-bottom: 10px;">
+                        <label for="productPlatform" class="card-title font-weight-bold" style="margin-right:5px;"> Plataforma: </label>
+                        <input id="productPlatform" class="no-border" readonly type="text" value="<%=productData.platform%>">
+                    </div>
+                    <div class="row form-inline" style="margin-bottom: 10px;">
+                        <label for="productQuantity" class="card-title font-weight-bold" style="margin-right:5px;"> Unidades disponibles: </label>
+                        <input id="productQuantity" class="no-border" readonly type="text" value="<%=productData.quantity%>">
+                    </div>
+                    <div class="row form-inline" style="margin-bottom: 10px;">
+                        <label for="productPrice" class="card-title font-weight-bold" style="margin-right:5px;"> Precio del producto: </label>
+                        <input id="productPrice" class="no-border" type="text" value="<%=productData.price%>">
+                    </div>
+                    <div class="row form-inline" style="margin-bottom: 10px;">
+                        <a href="#" class="btn btn-primary" style="width:48%; margin-right: 1%;">Comprar</a>
+                        <a href="#" class="btn btn-dark" style="width:48%;">Vender</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ZONA DE SCRIPTS -->
+    <%- include("./partials/mainViews/scripts.ejs") %>
+    <!-- ZONA DE PIE DE PÁGINA -->
+    <%- include("./partials/mainViews/footer.ejs") %>
+    <script src="/js/httpRequests.js"></script>
+  </body>
+</html>
