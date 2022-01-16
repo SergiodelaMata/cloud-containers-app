@@ -28,7 +28,7 @@
   </div>
   <div class="navbar-nav ml-auto">
     <% if(logged){ %>
-      <a class="btn btn-team mr-4 ml-2" href="/users/<%- userId %>/update" style="border-radius: 50px; border: 1px solid white ;">
+      <a class="btn btn-team mr-4 ml-2 <%= page_name === 'Usuarios' && 'active' %>" href="/users/<%- userId %>/update" style="border-radius: 50px; border: 1px solid white ;">
         <span class="fas fa-user"></span>
       </a>
       <a class="btn btn-outline-light mr-1" href="/logout">

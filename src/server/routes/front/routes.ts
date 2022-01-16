@@ -3,7 +3,7 @@ import config from "../../../../config";
 import fetch from "node-fetch";
 import {Ports} from "../../server.ports";
 import { GetProducts, GetProduct} from "../../../interfaces/product.interface";
-import { GetUsers} from "../../../interfaces/user.interface";
+import { GetUsers, GetUser} from "../../../interfaces/user.interface";
 import { GetHome} from "../../../interfaces/home.interface";
 import { AuthService } from "../../../services/auth.service";
 
@@ -151,6 +151,35 @@ router.get("/users", AuthService.authUser, async(_req: Request, res: Response) =
   formattedResponse.userId = formattedResponseLogged.userId;
   formattedResponse.rol = formattedResponseLogged.rol;
   res.render(`${config.rootFolder}/src/views/users.ejs`, formattedResponse);
+})
+
+router.get("/users/:userId/update", AuthService.authUser, async(_req: Request, res: Response) => {
+  _req.body.email = _req.session.email;
+  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+    method:"post",
+    body: JSON.stringify(_req.body),
+    headers: {"Content-Type": "application/json"},
+  });
+  const homeData = await responseLogged.json();
+  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
+
+  const response = await fetch(`http://localhost:${Ports.Enrouting}/users/${_req.params.userId}`);
+  const userData = await response.json();
+  const formattedResponse: GetUser = JSON.parse(JSON.stringify(userData));
+  formattedResponse.logged = formattedResponseLogged.logged;
+  formattedResponse.userId = formattedResponseLogged.userId;
+  formattedResponse.rol = formattedResponseLogged.rol;
+  res.render(`${config.rootFolder}/src/views/updateUser.ejs`, formattedResponse);
+})
+
+router.put("/users/user/update", AuthService.authUser, async(_req: Request, res: Response) => {
+  console.log(_req.body);
+  const response = await fetch(`http://localhost:${Ports.Enrouting}/user/update`, {
+    method:"put",
+    body: JSON.stringify(_req.body),
+    headers: {"Content-Type": "application/json"},
+  });
+  res.send(await response.json());
 })
 
 
