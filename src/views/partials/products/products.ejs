@@ -21,10 +21,12 @@
                                 <p class="card-text" style="width: 48%; text-align:right;"> Unidades: <%= product.quantity %></p>
                             </div>
                         </div>
-                        <div style="align-items: center;">
-                            <a href="#" class="btn btn-primary" style="width:48%; margin-right: 1%;">Comprar</a>
-                            <a href="#" class="btn btn-dark" style="width:48%;">Vender</a>
-                        </div>
+                        <% if(logged) { %>
+                            <div style="align-items: center;">
+                                <a href="#" class="btn btn-primary" style="width:48%; margin-right: 1%;">Comprar</a>
+                                <a href="#" class="btn btn-dark" style="width:48%;">Vender</a>
+                            </div>
+                        <% } %>
                         <div style="text-align: center; margin-top: 10px;">
                             <a href="/products/<%=product.productId%>" class="btn btn-secondary">Más información</a>
                         </div>

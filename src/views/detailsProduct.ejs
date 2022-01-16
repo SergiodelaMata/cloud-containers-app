@@ -40,9 +40,14 @@
                         <label for="productPrice" class="card-title font-weight-bold" style="margin-right:5px;"> Precio del producto: </label>
                         <input id="productPrice" class="no-border" type="text" value="<%=productData.price%>">
                     </div>
-                    <div class="row form-inline" style="margin-bottom: 10px;">
-                        <a href="#" class="btn btn-primary" style="width:48%; margin-right: 1%;">Comprar</a>
-                        <a href="#" class="btn btn-dark" style="width:48%;">Vender</a>
+                    <% if(logged) { %>
+                        <div class="row form-inline" style="margin-bottom: 10px;">
+                            <a href="#" class="btn btn-primary" style="width:48%; margin-right: 1%;">Comprar</a>
+                            <a href="#" class="btn btn-dark" style="width:48%;">Vender</a>
+                        </div>
+                    <% } %>
+                    <div class="container" style="margin-bottom: 10px; align-items: center;">
+                        <a href="/products" class="btn btn-secondary" style="width:48%;">Volver al listado de videojuegos</a>
                     </div>
                 </div>
             </div>
