@@ -17,10 +17,14 @@
     <div class="navbar-nav">
       <a class="nav-item nav-link <%= page_name === 'Inicio' && 'active' %>" id="Inicio-secc" href="/">Inicio</a>
       <a class="nav-item nav-link <%= page_name === 'Videojuegos' && 'active' %>" id="Videojuegos-secc" href="/products">Videojuegos</a>
-      <a class="nav-item nav-link <%= page_name === 'Comprar' && 'active' %>" id="Comprar-secc" href="/comprar">Comprar</a>
-      <a class="nav-item nav-link <%= page_name === 'Vender' && 'active' %>" id="Vender-secc" href="/vender">Vender</a>
-      <a class="nav-item nav-link <%= page_name === 'Usuarios' && 'active' %>" id="Users-secc" href="/users">Usuarios</a>
-    </div>
+      <% if(logged){ %>
+        <a class="nav-item nav-link <%= page_name === 'Comprar' && 'active' %>" id="Comprar-secc" href="/comprar">Comprar</a>
+        <a class="nav-item nav-link <%= page_name === 'Vender' && 'active' %>" id="Vender-secc" href="/vender">Vender</a>
+        <% if (rol == "admin"){ %>  
+          <a class="nav-item nav-link <%= page_name === 'Usuarios' && 'active' %>" id="Users-secc" href="/users">Usuarios</a>
+        <% } %>
+      <% } %>
+      </div>
   </div>
   <div class="navbar-nav ml-auto">
     <% if(logged){ %>
