@@ -16,6 +16,7 @@ export interface GetUser {
 
 export interface UserData {
   userId: string;
+  password: string;
   rol: string;
   name: string;
   firstsurname: string;
