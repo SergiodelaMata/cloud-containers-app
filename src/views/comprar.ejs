@@ -16,17 +16,25 @@
       <form id="form-product">
         <div class="row form-inline" style="margin-top:30px;">
           <label for="productName" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Nombre del videojuego: </label>
-          <select id="productName" style="margin-right:20px;">
+          <select id="productName" onchange="selectedGame();" style="margin-right:20px;">
             <option value="-">-</option>
+            <% productData.forEach(function(product) {%>
+              <%if(product.quantity != 0) { %>
+                <option value="<%= product.name %>"><%= product.name %></option>
+              <% } %>
+            <% }); %>
           </select>
+        </div>
+        <div class="d-none">
+          <input type="text" id="name" name="name" readonly value="-">
         </div>
         <div class="row form-inline" style="margin-top:30px;">
           <label for="quantity" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Número de unidades a comprar: </label>
-          <input id="quantity" type="number" value="">
+          <input id="quantity" name="quantity" type="number" min="0" max="0" value="">
         </div>
         <div class="row form-inline" style="margin-top:30px;">
           <label for="price" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Precio por unidad: </label>
-          <input id="price" class="no-border" type="number" readonly value="">
+          <input id="price" name="price" class="no-border" type="text" readonly value="">
         </div>
         <div style="margin-bottom: 30px;">
           <button type="submit" id="sendForm" class="btn btn-dark form-button">
@@ -40,5 +48,8 @@
     <%- include("./partials/mainViews/scripts.ejs") %>
     <!-- ZONA DE PIE DE PÁGINA -->
     <%- include("./partials/mainViews/footer.ejs") %>
+    <script src="/js/formTools.js"></script>
+    <script src="/js/httpRequests.js"></script>
+    <script src="/js/comprar.js"></script>
   </body>
 </html>
