@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "ts-node-dev --clear ./src/app.ts",
+        "start": "ts-node-dev --clear ./src/app.ts",
         "build": "tsc -w"
     },
     "keywords": [],
