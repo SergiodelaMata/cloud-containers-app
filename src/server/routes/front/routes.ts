@@ -41,6 +41,26 @@ router.get("/products", async(_req: Request, res: Response) => {
   res.render(`${config.rootFolder}/src/views/products.ejs`, formattedResponse);
 })
 
+router.get("/product/:productId", async(_req: Request, res: Response) => {
+  _req.body.email = _req.session.email;
+  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+    method:"post",
+    body: JSON.stringify(_req.body),
+    headers: {"Content-Type": "application/json"},
+  });
+  const homeData = await responseLogged.json();
+  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
+
+  const response = await fetch(`http://localhost:${Ports.Enrouting}/products/${_req.params.productId}`);
+  const productData = await response.json();
+  const formattedResponse: GetProduct = JSON.parse(JSON.stringify(productData));
+  formattedResponse.logged = formattedResponseLogged.logged;
+  formattedResponse.userId = formattedResponseLogged.userId;
+  formattedResponse.rol = formattedResponseLogged.rol;
+
+  res.send(formattedResponse);
+})
+
 router.get("/products/:productId", async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
   const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
@@ -119,7 +139,6 @@ router.post("/comprar", AuthService.authUser, async(_req: Request, res: Response
     const responseProduct = await fetch(`http://localhost:${Ports.Enrouting}/products/productByName/${_req.body.name}`);
     const productData = await responseProduct.json();
     const formattedResponseProduct: GetProduct = JSON.parse(JSON.stringify(productData));
-    console.log(formattedResponseProduct);
   
     if(quantitySelected > formattedResponseProduct.productData.quantity)
     {
@@ -131,18 +150,15 @@ router.post("/comprar", AuthService.authUser, async(_req: Request, res: Response
       const responseUser = await fetch(`http://localhost:${Ports.Enrouting}/user/findByEmail/${_req.session.email}`);
       const userData = await responseUser.json();
       const formattedResponseUser: GetUser = JSON.parse(JSON.stringify(userData));
-      console.log(formattedResponseUser);
       _req.body.userId = formattedResponseUser.userData.userId;
       _req.body.quantity = formattedResponseProduct.productData.quantity - quantitySelected;
       _req.body.quantitySelected = quantitySelected;
-      console.log(_req.body);
       const response = await fetch(`http://localhost:${Ports.Enrouting}/transaction/comprar`, {
         method:"post",
         body: JSON.stringify(_req.body),
         headers: {"Content-Type": "application/json"},
       });
       status = await response.json();
-      console.log(status);
     }
   }
   else
@@ -155,15 +171,47 @@ router.post("/comprar", AuthService.authUser, async(_req: Request, res: Response
 
 router.get("/vender", AuthService.authUser, async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
-  const response = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
     method:"post",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json"},
   });
-  console.log(response);
-  const homeData = await response.json();
-  const formattedResponse: GetHome = JSON.parse(JSON.stringify(homeData));
+
+  const homeData = await responseLogged.json();
+  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));
+
+  const response = await fetch(`http://localhost:${Ports.Enrouting}/products`);
+  const productData = await response.json();
+  const formattedResponse: GetProducts = JSON.parse(JSON.stringify(productData));
+  formattedResponse.logged = formattedResponseLogged.logged;
+  formattedResponse.userId = formattedResponseLogged.userId;
+  formattedResponse.rol = formattedResponseLogged.rol;
+
   res.render(`${config.rootFolder}/src/views/vender.ejs`, formattedResponse);
+})
+
+router.post("/vender", AuthService.authUser, async(_req: Request, res: Response) => {
+  var status;
+
+  if(_req.body.name != "-" && _req.body.quantity > 0)
+  {
+    const responseUser = await fetch(`http://localhost:${Ports.Enrouting}/user/findByEmail/${_req.session.email}`);
+    const userData = await responseUser.json();
+    const formattedResponseUser: GetUser = JSON.parse(JSON.stringify(userData));
+    _req.body.userId = formattedResponseUser.userData.userId;
+
+      const response = await fetch(`http://localhost:${Ports.Enrouting}/transaction/vender`, {
+        method:"post",
+        body: JSON.stringify(_req.body),
+        headers: {"Content-Type": "application/json"},
+      });
+      status = await response.json();
+  }
+  else
+  {
+    status = {statusSell:"Fields not completed"};
+  }
+  res.send(status);
 })
 
 router.get("/register", async(req: Request, res: Response) => {

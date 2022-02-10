@@ -2,6 +2,7 @@
 <html lang="es">
   <head>
     <%- include("./partials/mainViews/head.ejs") %>
+    <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/home.css" />
     <title>Vender</title>
   </head>
@@ -11,37 +12,50 @@
     <div class="container" style="text-align: center; margin-top: 10px;">
       <h1>Seleccione el producto que quiere vender:</h1>
     </div>
-    <div class="container" style="text-align: center; margin-top: 10px;">
+    <div class="container" style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
       <div class="card col-sm">
         <form id="form-product">
           <div class="row form-inline" style="margin-top:30px;">
-            <label for="productName" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Nombre del videojuego: </label>
-            <select id="productName" style="margin-right:20px;">
+            <label for="selectProduct" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Nombre del videojuego: </label>
+            <select id="selectProduct" style="margin-right:20px;">
               <option value="-">-</option>
-              <option value="Otro">Otro</option>
+              <% productData.forEach(function(product) {%>
+                  <option value="<%= product.productId %>"><%= product.name %></option>
+              <% }); %>
+              <option value="0">Otro</option>
             </select>
-            <label for="productNameOther" class="card-title font-weight-bold" style="margin-right:5px;"> Nombre del videojuego no listado:</label>
-            <input id="productNameOther" type="text" value="">
           </div>
-          <div class="row form-inline" style="margin-top:30px;">
-            <label for="productDescription" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Descripción del videojuego: </label>
-            <textarea id="productDescription" style="margin-right:20px;" rows="4" cols="70"  value=""></textarea>
+          <div id="nameDiv" class="container none" style="margin-top:30px;">
+            <div class="row">
+              <input class="none" id="productId" name="productId" type="text" value="" readonly required>
+              <label for="name" class="card-title font-weight-bold" style="margin-left:5px; margin-right:5px;"> Nombre del videojuego no listado:</label>
+              <input id="name" name="name" type="text" value="">
+            </div>
           </div>
-          <div class="row form-inline" style="margin-top:30px;">
-            <label for="productImage" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Imagen del videojuego: </label>
-            <input id="productImage" type="file">
+          <div id="descriptionDiv" class="container none" style="margin-top:30px;">
+            <div class="row">
+              <label for="description" class="card-title font-weight-bold" style="margin-left: 20px; margin-left:5px; margin-right:5px;"> Descripción del videojuego: </label>
+              <textarea id="description" name="description" style="margin-right:20px;" rows="4" cols="70"  value=""></textarea>
+            </div>
           </div>
-          <div class="row form-inline" style="margin-top:30px;">
-            <label for="quantity" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Número de unidades a vender: </label>
-            <input id="quantity" type="number" value="">
+          <div id="imageDiv" class="container none" style="margin-top:30px;">
+            <div class="row">
+              <label for="image" class="card-title font-weight-bold" style="margin-left: 20px; margin-left:5px; margin-right:5px;"> URL de la imagen de la carátula del videojuego: </label>
+              <input id="image" name="image" type="text">
+            </div>
           </div>
-          <div class="row form-inline" style="margin-top:30px;">
-            <label for="price" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Precio por el juego: </label>
-            <input id="price" type="number" value="" min="1" max="80">
+          <div id="quantityDiv" class="row" style="margin-top:30px;">
+            <label for="quantity" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Número de unidades a vender(*): </label>
+            <input id="quantity" name="quantity" type="number" value="0" required>
+            <input class="none" id="actualQuantity" name="actualQuantity" type="number" readonly>
+          </div>
+          <div id="priceDiv" class="row" style="margin-top:30px;">
+            <label for="price" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Precio por unidad: </label>
+            <input id="price" name="price" type="number" value="0" readonly required>
             <label for="price">Є</p>
           </div>
 
-          <div style="margin-bottom: 30px;">
+          <div style="margin-top: 10px; margin-bottom: 30px;">
             <button type="submit" id="sendForm" class="btn btn-dark form-button">
                 Vender
               </button>
@@ -53,5 +67,8 @@
     <%- include("./partials/mainViews/scripts.ejs") %>
     <!-- ZONA DE PIE DE PÁGINA -->
     <%- include("./partials/mainViews/footer.ejs") %>
+    <script src="/js/formTools.js"></script>
+    <script src="/js/httpRequests.js"></script>
+    <script src="/js/vender.js"></script>
   </body>
 </html>

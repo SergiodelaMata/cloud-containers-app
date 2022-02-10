@@ -18,6 +18,6 @@ form.addEventListener("submit", async (event) => {
   }
   else
   {
-    alert("Alguno de los campos no está completo. Por favor, rellene los campos que faltan.");
+    alert("Error con los datos introducidos del usuario. Por favor, revíselos antes de intentar de nuevo a registrarse.");
   }
 });
