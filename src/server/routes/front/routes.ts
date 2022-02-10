@@ -88,25 +88,6 @@ router.get("/products/productByName/:name", async(_req: Request, res: Response) 
   res.send(formattedResponse);
 })
 
-router.get("/comprar", AuthService.authUser, async(_req: Request, res: Response) => {
-  _req.body.email = _req.session.email;
-  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
-    method:"post",
-    body: JSON.stringify(_req.body),
-    headers: {"Content-Type": "application/json"},
-  });
-  const homeData = await responseLogged.json();
-  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));
-
-  const response = await fetch(`http://localhost:${Ports.Enrouting}/products`);
-  const productData = await response.json();
-  const formattedResponse: GetProducts = JSON.parse(JSON.stringify(productData));
-  formattedResponse.logged = formattedResponseLogged.logged;
-  formattedResponse.userId = formattedResponseLogged.userId;
-  formattedResponse.rol = formattedResponseLogged.rol;
-  res.render(`${config.rootFolder}/src/views/comprar.ejs`, formattedResponse);
-})
-
 router.put("/product/update", AuthService.authUser, async(_req: Request, res:Response) => {
   const response = await fetch(`http://localhost:${Ports.Enrouting}/product/update`, {
     method:"put",
@@ -126,6 +107,43 @@ router.delete("/admin/product/:productId", AuthService.authUser, async(_req: Req
   res.send(statusResponse);
 })
 
+router.get("/comprarUnique/:productId", AuthService.authUser, async(_req: Request, res: Response) => {
+  _req.body.email = _req.session.email;
+  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+    method:"post",
+    body: JSON.stringify(_req.body),
+    headers: {"Content-Type": "application/json"},
+  });
+  const homeData = await responseLogged.json();
+  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));
+
+  const response = await fetch(`http://localhost:${Ports.Enrouting}/products/${_req.params.productId}`);
+  const productData = await response.json();
+  const formattedResponse: GetProduct = JSON.parse(JSON.stringify(productData));
+  formattedResponse.logged = formattedResponseLogged.logged;
+  formattedResponse.userId = formattedResponseLogged.userId;
+  formattedResponse.rol = formattedResponseLogged.rol;
+  res.render(`${config.rootFolder}/src/views/comprarUnique.ejs`, formattedResponse);
+})
+
+router.get("/comprar", AuthService.authUser, async(_req: Request, res: Response) => {
+  _req.body.email = _req.session.email;
+  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+    method:"post",
+    body: JSON.stringify(_req.body),
+    headers: {"Content-Type": "application/json"},
+  });
+  const homeData = await responseLogged.json();
+  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));
+
+  const response = await fetch(`http://localhost:${Ports.Enrouting}/products`);
+  const productData = await response.json();
+  const formattedResponse: GetProducts = JSON.parse(JSON.stringify(productData));
+  formattedResponse.logged = formattedResponseLogged.logged;
+  formattedResponse.userId = formattedResponseLogged.userId;
+  formattedResponse.rol = formattedResponseLogged.rol;
+  res.render(`${config.rootFolder}/src/views/comprar.ejs`, formattedResponse);
+})
 
 router.post("/comprar", AuthService.authUser, async(_req: Request, res: Response) => {
   var status;
@@ -136,10 +154,10 @@ router.post("/comprar", AuthService.authUser, async(_req: Request, res: Response
   const quantitySelected: number = +_req.body.quantity;
   if(_req.body.name != "-" && quantitySelected > 0)
   {
-    const responseProduct = await fetch(`http://localhost:${Ports.Enrouting}/products/productByName/${_req.body.name}`);
+    const responseProduct = await fetch(`http://localhost:${Ports.Enrouting}/products/${_req.body.productId}`);
     const productData = await responseProduct.json();
     const formattedResponseProduct: GetProduct = JSON.parse(JSON.stringify(productData));
-  
+    console.log(formattedResponseProduct);    
     if(quantitySelected > formattedResponseProduct.productData.quantity)
     {
       status = {statusSell:"No enough units"};
@@ -168,6 +186,24 @@ router.post("/comprar", AuthService.authUser, async(_req: Request, res: Response
   res.send(status);
 })
 
+router.get("/venderUnique/:productId", AuthService.authUser, async(_req: Request, res: Response) => {
+  _req.body.email = _req.session.email;
+  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+    method:"post",
+    body: JSON.stringify(_req.body),
+    headers: {"Content-Type": "application/json"},
+  });
+  const homeData = await responseLogged.json();
+  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));
+
+  const response = await fetch(`http://localhost:${Ports.Enrouting}/products/${_req.params.productId}`);
+  const productData = await response.json();
+  const formattedResponse: GetProduct = JSON.parse(JSON.stringify(productData));
+  formattedResponse.logged = formattedResponseLogged.logged;
+  formattedResponse.userId = formattedResponseLogged.userId;
+  formattedResponse.rol = formattedResponseLogged.rol;
+  res.render(`${config.rootFolder}/src/views/venderUnique.ejs`, formattedResponse);
+})
 
 router.get("/vender", AuthService.authUser, async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;

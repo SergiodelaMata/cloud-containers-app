@@ -25,7 +25,7 @@ selectProduct.addEventListener("change", async() =>{
     nameField.value = "";
     nameField.removeAttribute("required");
     nameDiv.classList.add("none");
-    description.text = "";
+    description.innerHTML = "";
     descriptionDiv.classList.add("none");
     image.value = "";
     imageDiv.classList.add("none");
@@ -39,7 +39,7 @@ selectProduct.addEventListener("change", async() =>{
     nameField.value = "";
     nameField.setAttribute("required", true);
     nameDiv.classList.remove("none");
-    description.text = "";
+    description.innerHTML = "";
     descriptionDiv.classList.remove("none");
     image.value = "";
     imageDiv.classList.remove("none");
@@ -68,7 +68,8 @@ selectProduct.addEventListener("change", async() =>{
     console.log(productData);
     productId.value = productData.productData.productId;
     nameField.value = productData.productData.name;
-    description.text = productData.productData.description;
+    console.log(productData.productData.description);
+    description.innerHTML = productData.productData.description;
     image.value = productData.productData.image;
     quantity.value = "";
     quantity.min = "1";
@@ -89,6 +90,8 @@ formProduct.addEventListener("submit", async (event) => {
   if(value[0] !== "-")
   {
     var formData = formSerializer(event);
+    console.log(formData);
+    alert("hola");
     const statusSell = await postRequest("/vender", formData);
 
     if(statusSell.statusSell == "Sell")

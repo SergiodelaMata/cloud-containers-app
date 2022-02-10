@@ -19,8 +19,8 @@
                             </div>
                             <% if(logged) { %>
                                 <div style="align-items: center;">
-                                    <a href="#" class="btn btn-primary" style="width:48%; margin-right: 1%;">Comprar</a>
-                                    <a href="#" class="btn btn-dark" style="width:48%;">Vender</a>
+                                    <a href="/comprarUnique/<%=product.productId%>" class="btn btn-primary" style="width:48%; margin-right: 1%;">Comprar</a>
+                                    <a href="/venderUnique/<%=product.productId%>" class="btn btn-success" style="width:48%;">Vender</a>
                                 </div>
                             <% } %>
                             <div style="text-align: center; margin-top: 10px;">
@@ -38,7 +38,6 @@
                         <th scope="col"> Nombre del videojuego</th>
                         <th scope="col"> Precio</th>
                         <th scope="col"> Cantidad disponible</th>
-                        <th scope="col"> Plataforma</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
@@ -48,7 +47,6 @@
                             <td colspan="1" name="name"><%= product.name%></td>
                             <td colspan="1" name="price"><%= product.price%></td>
                             <td colspan="1" name="quantity"><%= product.quantity%></td>
-                            <td colspan="1" name="platform"><%= product.platform%></td>
                             <td colspan="1" name="image">
                                 <img class="rounded mx-auto d-block" style="width:80%;" src="<%= product.image %>">
                             </td>

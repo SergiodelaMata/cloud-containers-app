@@ -37,14 +37,6 @@
                             <textarea id="description" name="description" rows="4" cols="70"><%=productData.description%></textarea>
                         </div>
                         <div class="row" style="margin-bottom: 10px;">
-                            <label for="company" class="card-title font-weight-bold" style="margin-right:5px;"> Compañía: </label>
-                            <input id="company" name="company" type="text" value="<%=productData.company%>" required>
-                        </div>
-                        <div class="row" style="margin-bottom: 10px;">
-                            <label for="platform" class="card-title font-weight-bold" style="margin-right:5px;"> Plataforma: </label>
-                            <input id="platform" name="platform" type="text" value="<%=productData.platform%>" required>
-                        </div>
-                        <div class="row" style="margin-bottom: 10px;">
                             <label for="quantity" class="card-title font-weight-bold" style="margin-right:5px;"> Unidades disponibles: </label>
                             <input id="quantity" name="quantity" type="text" value="<%=productData.quantity%>" required>
                         </div>
@@ -66,14 +58,6 @@
                             <textarea id="productDescription" readonly rows="4" cols="70"><%=productData.description%></textarea>
                         </div>
                         <div class="row form-inline" style="margin-bottom: 10px;">
-                            <label for="productCompany" class="card-title font-weight-bold" style="margin-right:5px;"> Compañía: </label>
-                            <input id="productCompany" class="no-border" readonly type="text" value="<%=productData.company%>">
-                        </div>
-                        <div class="row form-inline" style="margin-bottom: 10px;">
-                            <label for="productPlatform" class="card-title font-weight-bold" style="margin-right:5px;"> Plataforma: </label>
-                            <input id="productPlatform" class="no-border" readonly type="text" value="<%=productData.platform%>">
-                        </div>
-                        <div class="row form-inline" style="margin-bottom: 10px;">
                             <label for="productQuantity" class="card-title font-weight-bold" style="margin-right:5px;"> Unidades disponibles: </label>
                             <input id="productQuantity" class="no-border" readonly type="text" value="<%=productData.quantity%>">
                         </div>
@@ -87,10 +71,10 @@
                         <div class="row form-inline" style="margin-bottom: 20px;">
                             <div class="col-sm-2"></div>
                             <div class="col-sm-4" style="width:100%;">
-                                <a href="#" class="btn btn-primary" style="width:100%;">Comprar</a>
+                                <a href="/comprarUnique/<%=productData.productId%>" class="btn btn-primary" style="width:100%;">Comprar</a>
                             </div>
                             <div class="col-sm-4" style="width:100%;">
-                                <a href="#" class="btn btn-success" style="width:100%;">Vender</a>
+                                <a href="/venderUnique/<%=productData.productId%>" class="btn btn-success" style="width:100%;">Vender</a>
                             </div>
                             <div class="col-sm-2"></div>
                         </div>

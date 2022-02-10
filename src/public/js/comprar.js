@@ -1,21 +1,22 @@
 const form = document.getElementById("form-product");
-var selectBox = document.getElementById("productName");
+var selectProduct = document.getElementById("productName");
 
 async function selectedGame(){
-  const selectedValue = selectBox.options[selectBox.selectedIndex].value;
+  const selectedValue = getSelectValues(selectProduct);
+
   if(selectedValue != "-")
   {
-    const productData = await getProductByName();
+    const productData = await getProductById();
     const maxQuantity = productData.productData.quantity;
     const price = productData.productData.price;
-    document.getElementById("name").value = selectedValue;
+    document.getElementById("productId").value = selectedValue;
     document.getElementById("quantity").max = maxQuantity;
     document.getElementById("quantity").value = 0;
     document.getElementById("price").value = price + "\u20AC";
   }
   else
   {
-    document.getElementById("name").value = "-";
+    document.getElementById("productId").value = "-";
     document.getElementById("quantity").max = 0;
     document.getElementById("quantity").value = 0;
     document.getElementById("price").value = "";
@@ -23,9 +24,9 @@ async function selectedGame(){
 
 }
 
-async function getProductByName(){
-  const selectedValue = selectBox.options[selectBox.selectedIndex].value;
-  const productData = await getRequest("/products/productByName/"+selectedValue);
+async function getProductById(){
+  const selectedValue = getSelectValues(selectProduct);
+  const productData = await getRequest("/product/"+selectedValue);
   return productData;
 }
 
