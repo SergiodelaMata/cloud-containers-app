@@ -18,7 +18,6 @@ const price = document.getElementById("price");
 
 selectProduct.addEventListener("change", async() =>{
   value = getSelectValues(selectProduct);
-  console.log(value[0]);
   if(value[0] === "-") //Ninguna opción ha sido seleccionada
   {
     productId.value = "-";
@@ -30,7 +29,7 @@ selectProduct.addEventListener("change", async() =>{
     image.value = "";
     imageDiv.classList.add("none");
     actualQuantity.value = "";
-    quantity.value = "";
+    quantity.value = "0";
     price.value = "0";
   }
   else if(value[0] === "0") //Nuevo juego

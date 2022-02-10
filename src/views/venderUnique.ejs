@@ -36,7 +36,7 @@
           </div>
           <div id="quantityDiv" class="row" style="margin-top:30px;">
             <label for="quantity" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Número de unidades a vender(*): </label>
-            <input id="quantity" name="quantity" type="number" value="0" required>
+            <input id="quantity" name="quantity" type="number" min="1" value="0" required>
             <input class="none" id="actualQuantity" name="actualQuantity" type="number" value="<%= productData.quantity%>" readonly>
           </div>
           <div id="priceDiv" class="row" style="margin-top:30px;">
