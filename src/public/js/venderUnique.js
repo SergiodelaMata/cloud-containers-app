@@ -18,7 +18,6 @@ formProduct.addEventListener("submit", async (event) => {
 });
 
 async function getProductById(){
-  console.log("hola");
   const productData = await getRequest("/product/"+value[0]);
   return productData;
 }

@@ -65,10 +65,8 @@ selectProduct.addEventListener("change", async() =>{
     price.value = "0";
 
     const productData = await getProductById();
-    console.log(productData);
     productId.value = productData.productData.productId;
     nameField.value = productData.productData.name;
-    console.log(productData.productData.description);
     description.innerHTML = productData.productData.description;
     image.value = productData.productData.image;
     quantity.value = "";
@@ -90,8 +88,6 @@ formProduct.addEventListener("submit", async (event) => {
   if(value[0] !== "-")
   {
     var formData = formSerializer(event);
-    console.log(formData);
-    alert("hola");
     const statusSell = await postRequest("/vender", formData);
 
     if(statusSell.statusSell == "Sell")
@@ -112,7 +108,6 @@ formProduct.addEventListener("submit", async (event) => {
 });
 
 async function getProductById(){
-  console.log("hola");
   const productData = await getRequest("/product/"+value[0]);
   return productData;
 }

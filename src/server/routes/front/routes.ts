@@ -99,7 +99,6 @@ router.put("/product/update", AuthService.authUser, async(_req: Request, res:Res
 })
 
 router.delete("/admin/product/:productId", AuthService.authUser, async(_req: Request, res:Response) => {
-  console.log(_req.params.productId);
   const response = await fetch(`http://localhost:${Ports.Enrouting}/admin/product/${_req.params.productId}`, {
     method:"delete",
   });
@@ -149,7 +148,6 @@ router.post("/comprar", AuthService.authUser, async(_req: Request, res: Response
   var status;
   _req.body.typetransaction = "Comprar";
   _req.body.datetransaction = new Date();
-  console.log(_req.body);
 
   const quantitySelected: number = +_req.body.quantity;
   if(_req.body.name != "-" && quantitySelected > 0)
@@ -157,7 +155,6 @@ router.post("/comprar", AuthService.authUser, async(_req: Request, res: Response
     const responseProduct = await fetch(`http://localhost:${Ports.Enrouting}/products/${_req.body.productId}`);
     const productData = await responseProduct.json();
     const formattedResponseProduct: GetProduct = JSON.parse(JSON.stringify(productData));
-    console.log(formattedResponseProduct);    
     if(quantitySelected > formattedResponseProduct.productData.quantity)
     {
       status = {statusSell:"No enough units"};
