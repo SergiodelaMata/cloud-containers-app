@@ -48,7 +48,9 @@
                             <td colspan="1" name="price"><%= product.price%></td>
                             <td colspan="1" name="quantity"><%= product.quantity%></td>
                             <td colspan="1" name="image">
-                                <img class="rounded mx-auto d-block" style="width:80%;" src="<%= product.image %>">
+                                <%if(product.image != null && product.image != ''){%>
+                                    <img class="rounded mx-auto d-block" style="width:80%;" src="<%= product.image %>">
+                                <% } %>
                             </td>
                             <td colspan="1" name="buttons">
                                 <a class="btn btn-primary btn-circle modify-product" productId="<%= product.productId%>" title="Modificar datos del producto">
