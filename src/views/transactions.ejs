@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include("./partials/mainViews/head.ejs") %>
+    <link rel="stylesheet" href="/css/products.css" />
+    <title>Videojuegos</title>
+  </head>
+  <body>
+    <!-- BARRA DE NAVEGACIÓN -->
+    <%- include("./partials/mainViews/navbar.ejs", {page_name:"Transacciones"}) %>
+    <div id="videojuegos" class="align-items-center">
+      <div class="col-xl-12" style="text-align: center; margin-top: 10px;">
+          <h1>Transacciones realizadas</h1>
+      </div>
+      <div class="container card" style="margin-bottom:20px;">
+        <div class="row">
+          <table class="table table-border" style="table-layout: fixed; word-wrap: break-word;">
+              <tr>
+                  <th scope="col" style="display:none"></th>
+                  <th scope="col"> Fecha de transacción</th>
+                  <th scope="col"> Operación realizada</th>
+                  <th scope="col"> Cantidad</th>
+                  <th scope="col"> Precio de la unidad</th>
+                  <th scope="col"> Identificador del producto</th>
+              </tr>
+              <% transactionData.forEach(function(transaction) { %>
+                  <tr>
+                      <th scope="row" style="display:none;"><%= transaction.transactionId%></th>
+                      <td colspan="1" name="datetransaction"><%= transaction.datetransaction%></td>
+                      <td colspan="1" name="typetransaction"><%= transaction.typetransaction%></td>
+                      <td colspan="1" name="quantity"><%= transaction.quantity%></td>
+                      <td colspan="1" name="price"><%= transaction.price%></td>
+                      <td colspan="1" name="productId"><%= transaction.productId%></td>
+                  </tr>
+              <% }); %>
+          </table>
+        </div>
+      </div>
+    </div>  
+    <!-- ZONA DE SCRIPTS -->
+
+    <!-- ZONA DE PIE DE PÁGINA -->
+    <%- include("./partials/mainViews/footer.ejs") %>
+    <script src="/js/formTools.js"></script>
+    <script src="/js/httpRequests.js"></script>
+  </body>
+</html>
