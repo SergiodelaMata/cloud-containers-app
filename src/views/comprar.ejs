@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include("./partials/mainViews/head.ejs") %>
+    <link rel="stylesheet" href="/css/products.css" />
+    <title>Comprar</title>
+  </head>
+  <body>
+  <!-- BARRA DE NAVEGACIÓN -->
+  <%- include("./partials/mainViews/navbar.ejs", {page_name:"Comprar"}) %>
+  <div class="container" style="text-align: center; margin-top: 10px;">
+    <h1>Seleccione el producto que quiere comprar:</h1>
+  </div>
+  <div class="container" style="text-align: center; margin-top: 10px;">
+    <div class="card col-sm">
+      <form id="form-product">
+        <div class="row form-inline" style="margin-top:30px;">
+          <label for="productName" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Nombre del videojuego: </label>
+          <select id="productName" onchange="selectedGame();" style="margin-right:20px;">
+            <option value="-">-</option>
+            <% productData.forEach(function(product) {%>
+              <%if(product.quantity != 0) { %>
+                <option value="<%= product.productId %>"><%= product.name %></option>
+              <% } %>
+            <% }); %>
+          </select>
+        </div>
+        <div class="d-none">
+          <input type="text" id="productId" name="productId" readonly value="-">
+        </div>
+        <div class="row form-inline" style="margin-top:30px;">
+          <label for="quantity" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Número de unidades a comprar(*): </label>
+          <input id="quantity" name="quantity" type="number" min="1" max="0" value="0" required>
+        </div>
+        <div class="row form-inline" style="margin-top:30px;">
+          <label for="price" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Precio por unidad: </label>
+          <input id="price" name="price" class="no-border" type="text" readonly value="">
+        </div>
+        <div style="margin-bottom: 30px;">
+          <button type="submit" id="sendForm" class="btn btn-dark form-button">
+              Comprar
+            </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- ZONA DE SCRIPTS -->
+    <%- include("./partials/mainViews/scripts.ejs") %>
+    <!-- ZONA DE PIE DE PÁGINA -->
+    <%- include("./partials/mainViews/footer.ejs") %>
+    <script src="/js/formTools.js"></script>
+    <script src="/js/httpRequests.js"></script>
+    <script src="/js/comprar.js"></script>
+  </body>
+</html>

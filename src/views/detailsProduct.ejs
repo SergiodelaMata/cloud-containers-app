@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include("./partials/mainViews/head.ejs") %>
+    <link rel="stylesheet" href="/css/products.css" />
+    <title><%=productData.name%></title>
+  </head>
+  <body>
+    <!-- BARRA DE NAVEGACIÓN -->
+    <%- include("./partials/mainViews/navbar.ejs", {page_name:"Videojuegos"}) %>
+    <div class="container" style="text-align: center; margin-top: 10px;">
+        <h1>Detalles del videojuego</h1>
+    </div>
+    <div class="container card justify-content-center" style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
+        <div class="d-flex justify-content-center" style="margin-top: 10px;">
+            <div class="container card">
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="container col-sm-10 mx-auto" style="margin-top:10px; margin-bottom: 10px;">
+                        <img src="<%= productData.image%>" style="width:90%;">
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+            </div>
+            <div class="container card">
+                <form id="form-product" style="margin: 10px;">
+                    <% if (logged && rol == 'admin'){%>
+                        <div class="row" style="display:none;">
+                            <input id="productId" name="productId" type="text" value="<%=productData.productId%>" required>
+                        </div>
+                        <div class="row" style="margin-bottom: 10px;">
+                            <label for="name" class="card-title font-weight-bold" style="margin-right:5px;"> Nombre: </label>
+                            <input id="name" name="name" type="text" value="<%=productData.name%>" required>
+                        </div>
+                        <div class="row" style="margin-bottom: 10px;">
+                            <label for="description" class="card-title font-weight-bold" style="margin-right:5px;"> Descripción: </label>
+                            <textarea id="description" name="description" rows="4" cols="70"><%=productData.description%></textarea>
+                        </div>
+                        <div class="row" style="margin-bottom: 10px;">
+                            <label for="quantity" class="card-title font-weight-bold" style="margin-right:5px;"> Unidades disponibles: </label>
+                            <input id="quantity" name="quantity" type="text" value="<%=productData.quantity%>" required>
+                        </div>
+                        <div class="row" style="margin-bottom: 10px;">
+                            <label for="price" class="card-title font-weight-bold" style="margin-right:5px;"> Precio del producto: </label>
+                            <input id="price" name="price" type="text" value="<%=productData.price%>" required>
+                        </div>
+                        <div class="row" style="margin-bottom: 10px;">
+                            <label for="image" class="card-title font-weight-bold" style="margin-right:5px;"> URL de la imagen del producto: </label>
+                            <input id="image" type="text" value="<%=productData.image%>" required>
+                        </div>
+                    <%} else {%>
+                        <div class="row form-inline" style="margin-bottom: 10px;">
+                            <label for="productName" class="card-title font-weight-bold" style="margin-right:5px;"> Nombre: </label>
+                            <input id="productName" class="no-border" readonly type="text" value="<%=productData.name%>">
+                        </div>
+                        <div class="row form-inline" style="margin-bottom: 10px;">
+                            <label for="productDescription" class="card-title font-weight-bold" style="margin-right:5px;"> Descripción: </label>
+                            <textarea id="productDescription" readonly rows="4" cols="70"><%=productData.description%></textarea>
+                        </div>
+                        <div class="row form-inline" style="margin-bottom: 10px;">
+                            <label for="productQuantity" class="card-title font-weight-bold" style="margin-right:5px;"> Unidades disponibles: </label>
+                            <input id="productQuantity" class="no-border" readonly type="text" value="<%=productData.quantity%>">
+                        </div>
+                        <div class="row form-inline" style="margin-bottom: 10px;">
+                            <label for="productPrice" class="card-title font-weight-bold" style="margin-right:5px;"> Precio del producto: </label>
+                            <input id="productPrice" class="no-border" type="text" value="<%=productData.price%>">
+                        </div>
+                    <% } %>
+                    
+                    <% if(logged && rol == 'user') { %>
+                        <div class="row form-inline" style="margin-bottom: 20px;">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4" style="width:100%;">
+                                <a href="/comprarUnique/<%=productData.productId%>" class="btn btn-primary" style="width:100%;">Comprar</a>
+                            </div>
+                            <div class="col-sm-4" style="width:100%;">
+                                <a href="/venderUnique/<%=productData.productId%>" class="btn btn-success" style="width:100%;">Vender</a>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    <% } else if (logged && rol == 'admin') {%>
+                        <div class="row" style="margin-top: 10px; margin-bottom: 20px;">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6" style="width:100%;">
+                                <button id="sendForm" type="submit" class="btn btn-primary" style="width:100%;">Actualizar videojuego</button>
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+
+                    <% } %>
+                    <div class="row" style="margin-bottom: 20px;">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8" style="width:100%;">
+                            <a href="/products" class="btn btn-secondary" style="max-width:100%;">Volver al listado de videojuegos</a>
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ZONA DE SCRIPTS -->
+    <%- include("./partials/mainViews/scripts.ejs") %>
+    <!-- ZONA DE PIE DE PÁGINA -->
+    <%- include("./partials/mainViews/footer.ejs") %>
+    <script src="/js/formTools.js"></script>
+    <script src="/js/httpRequests.js"></script>
+    <script src="/js/updateProduct.js"></script>
+  </body>
+</html>

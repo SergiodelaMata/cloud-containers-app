@@ -16,6 +16,33 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <a class="nav-item nav-link <%= page_name === 'Inicio' && 'active' %>" id="Inicio-secc" href="/">Inicio</a>
-    </div>
+      <a class="nav-item nav-link <%= page_name === 'Videojuegos' && 'active' %>" id="Videojuegos-secc" href="/products">Videojuegos</a>
+      <% if(logged){ %>
+        <a class="nav-item nav-link <%= page_name === 'Comprar' && 'active' %>" id="Comprar-secc" href="/comprar">Comprar</a>
+        <a class="nav-item nav-link <%= page_name === 'Vender' && 'active' %>" id="Vender-secc" href="/vender">Vender</a>
+        <% if (rol == "admin"){ %>  
+          <a class="nav-item nav-link <%= page_name === 'Usuarios' && 'active' %>" id="Users-secc" href="/users">Usuarios</a>
+        <% } %>
+      <% } %>
+      </div>
+  </div>
+  <div class="navbar-nav ml-auto">
+    <% if(logged){ %>
+      <a class="btn btn-team mr-4 ml-2 <%= page_name === 'Usuarios' && 'active' %>" href="/users/<%- userId %>/update" style="border-radius: 50px; border: 1px solid white ;">
+        <span class="fas fa-user"></span>
+      </a>
+      <a class="btn btn-outline-light mr-1" href="/logout">
+        <span class="fas fa-sign-in-alt"></span> Logout
+      </a>
+    <% } else{ %>
+      <a id="register-secc" class=" btn btn-outline-light mr-1 <%= page_name === 'Registro' && 'disabled' %> " style="<%= page_name === 'Registro' && 'Background-color: white; color: red !important;'%>" href="/register">
+        <span class="fas fa-user"></span> Sign Up
+      </a>
+
+      <a id="login-secc" class=" btn btn-outline-light mr-1 <%= page_name === 'Login' && 'disabled' %> " style="<%= page_name === 'Login' && 'Background-color: white; color: red !important;'%>" href="/login">
+        <span class="fas fa-sign-in-alt"></span> Login
+      </a>
+    <% } %>
+
   </div>
 </nav>

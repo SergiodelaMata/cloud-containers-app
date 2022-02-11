@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include("./partials/mainViews/head.ejs") %>
+    <link rel="stylesheet" href="/css/products.css" />
+    <title>Comprar</title>
+  </head>
+  <body>
+  <!-- BARRA DE NAVEGACIÓN -->
+  <%- include("./partials/mainViews/navbar.ejs", {page_name:"Comprar"}) %>
+  <div class="container" style="text-align: center; margin-top: 10px;">
+    <h1>Seleccione el producto que quiere comprar:</h1>
+  </div>
+  <div class="container" style="text-align: center; margin-top: 10px;">
+    <div class="card col-sm">
+      <form id="form-product">
+        <div class="d-none">
+          <input type="text" id="productId" name="productId" readonly required value="<%= productData.productId%>">
+        </div>
+        <div class="row form-inline" style="margin-top:30px;">
+          <label for="name" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Nombre del videojuego:(*): </label>
+          <input id="name" name="name" type="text" value="<%= productData.name %>" readonly required>
+        </div>
+        <div class="row form-inline" style="margin-top:30px;">
+          <label for="quantity" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Número de unidades a comprar(*): </label>
+          <input id="quantity" name="quantity" type="number" min="1" max="<%= productData.quantity%>" value="0" required>
+        </div>
+        <div class="row form-inline" style="margin-top:30px;">
+          <label for="price" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Precio por unidad: </label>
+          <input id="price" name="price" class="no-border" type="text" readonly required value="<%= productData.price %>€">
+        </div>
+        <div style="margin-bottom: 30px;">
+          <button type="submit" id="sendForm" class="btn btn-dark form-button">
+              Comprar
+            </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- ZONA DE SCRIPTS -->
+    <%- include("./partials/mainViews/scripts.ejs") %>
+    <!-- ZONA DE PIE DE PÁGINA -->
+    <%- include("./partials/mainViews/footer.ejs") %>
+    <script src="/js/formTools.js"></script>
+    <script src="/js/httpRequests.js"></script>
+    <script src="/js/comprarUnique.js"></script>
+  </body>
+</html>

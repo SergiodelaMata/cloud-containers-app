@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include("./partials/mainViews/head.ejs") %>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Iniciar sesión</title>
+  </head>
+  <body>
+    <!-- BARRA DE NAVEGACIÓN -->
+    <%- include("./partials/mainViews/navbar.ejs", {page_name:"Login"}) %>
+    <div class="container" style="text-align: center; margin-top: 10px;">
+      <h1>Iniciar sesión:</h1>
+    </div>
+    <div class="container center" style="text-align: center">
+      <div class="row card col-md-6 mx-auto">
+        <form id="form-login">
+          <div style="margin-top: 20px;">
+            <label for="email" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Correo del usuario: </label>
+            <input class="border border-dark" id="email" name="email" type="text" placeholder="Introduzca su correo" value="" required>
+          </div>
+          <div style="margin-top:20px;">
+            <label for="password" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Contraseña: </label>
+            <input class="border border-dark" id="password" name="password" type="password" placeholder="Introduzca su contraseña" value="" required>
+          </div>
+
+          <div style="margin-top: 20px; margin-bottom: 20px;">
+            <button type="submit" id="sendForm" class="btn btn-dark form-button">
+                Iniciar sesión
+              </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- ZONA DE SCRIPTS -->
+    <%- include("./partials/mainViews/scripts.ejs") %>
+    <script src="/js/formTools.js"></script>
+    <script src="/js/httpRequests.js"></script>
+    <script src="/js/login.js"></script>
+  </body>
+</html>

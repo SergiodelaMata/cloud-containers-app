@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include("./partials/mainViews/head.ejs") %>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Actualizar datos</title>
+  </head>
+  <body>
+    <!-- BARRA DE NAVEGACIÓN -->
+    <%- include("./partials/mainViews/navbar.ejs", {page_name:"Usuarios"}) %>
+    <div class="container" style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
+      <h1>Actualizar datos del usuario:</h1>
+    </div>
+    <div class="container" style="text-align: center">
+      <div class="row card col-md-6 mx-auto">
+        <form id="form-register">
+          <div class="d-none">
+            <input type="text" id="userId" name="userId" readonly value="<%= userData.userId %>">
+          </div>
+          <div class="d-none">
+            <input type="text" id="rol" name="rol" readonly value="<%= userData.rol %>">
+          </div>
+          <div class="row card">
+            <div class="row form-inline" style="margin-top: 20px;">
+              <label for="email" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Correo: </label>
+              <input class="border border-dark" id="email" name="email" type="text" value="<%= userData.email%>">
+            </div>
+            <div class="row form-inline" style="margin-top: 20px;">
+              <label for="name" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Nombre: </label>
+              <input class="border border-dark" id="name" name="name" type="text" value="<%= userData.name%>">
+            </div>
+            <div class="row form-inline" style="margin-top: 20px;">
+              <label for="firstsurname" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Primer apellido: </label>
+              <input class="border border-dark" id="firstsurname" name="firstsurname" type="text" value="<%= userData.firstsurname%>">
+            </div>
+            <div class="row form-inline" style="margin-top: 20px;">
+              <label for="secondsurname" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Segundo apellido: </label>
+              <input class="border border-dark" id="secondsurname" name="secondsurname" type="text" value="<%= userData.secondsurname%>">
+            </div>
+            <div class="row form-inline" style="margin-top: 20px;">
+              <label for="telephone" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Teléfono: </label>
+              <input class="border border-dark" id="telephone" name="telephone" type="text" maxlength="9" value="<%= userData.telephone%>">
+            </div>
+            <div style="margin-top: 20px; margin-bottom: 20px;">
+              <button type="submit" id="sendForm" class="btn btn-dark form-button">
+                  Actualizar campos
+              </button>
+            </div>
+          </div>
+          <div class="row card">
+            <div class="d-none">
+              <input type="text" id="currentpassword" name="currentpassword" readonly value="<%= userData.password %>">
+            </div>
+            <div class="row form-inline" style="margin-top:20px;">
+              <label for="password" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Antigua contraseña: </label>
+              <input class="border border-dark" id="password" name="password" type="text" value="">
+            </div>
+            <div class="row form-inline" style="margin-top:20px;">
+              <label for="newpassword" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Nueva contraseña: </label>
+              <input class="border border-dark" id="newpassword" name="newpassword" type="text" value="">
+            </div>
+            <div class="row form-inline" style="margin-top:20px;">
+              <label for="verifypassword" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Verificar contraseña: </label>
+              <input class="border border-dark" id="verifypassword" name="verifypassword" type="text" value="">
+            </div>
+            <div style="margin-top: 20px; margin-bottom: 20px;">
+              <button type="submit" id="sendForm" class="btn btn-dark form-button">
+                  Actualizar contraseña
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+    <!-- ZONA DE SCRIPTS -->
+    <%- include("./partials/mainViews/scripts.ejs") %>
+    <script src="/js/formTools.js"></script>
+    <script src="/js/httpRequests.js"></script>
+    <script src="/js/updateUser.js"></script>
+  </body>
+</html>
