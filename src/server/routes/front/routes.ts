@@ -139,16 +139,16 @@ router.delete("/admin/product/:productId", AuthService.authUser, async(_req: Req
   res.send(statusResponse);
 })
 
-router.get("/transactions", async(_req: Request, res: Response) => {
+router.get("/transactions", AuthService.authUser, async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
-  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+  const responseLogged = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/checkLogged`, {
     method:"post",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
   const homeData = await responseLogged.json();
   const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
-  const response = await fetch(`http://localhost:${Ports.Enrouting + _req.url}/user/${formattedResponseLogged.userId}`);
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting + _req.url}/user/${formattedResponseLogged.userId}`);
   const transactionData = await response.json();
   const formattedResponse: GetTransactions = JSON.parse(JSON.stringify(transactionData));
   formattedResponse.logged = formattedResponseLogged.logged;
