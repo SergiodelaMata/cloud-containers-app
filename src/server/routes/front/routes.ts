@@ -2,6 +2,7 @@ import express, { Request, Response, Router } from "express";
 import config from "../../../../config";
 import fetch from "node-fetch";
 import {Ports} from "../../server.ports";
+import {Hosts} from "../../server.hosts";
 import { GetProducts, GetProduct} from "../../../interfaces/product.interface";
 import { GetUsers, GetUser} from "../../../interfaces/user.interface";
 import { GetHome} from "../../../interfaces/home.interface";
@@ -12,7 +13,7 @@ const router: Router = express.Router();
 
 router.get("/", async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
-  const response = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/checkLogged`, {
     method:"post",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -28,7 +29,7 @@ router.get("/", async(_req: Request, res: Response) => {
 
 router.get("/products", async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
-  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+  const responseLogged = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/checkLogged`, {
     method:"post",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -36,7 +37,7 @@ router.get("/products", async(_req: Request, res: Response) => {
   const homeData = await responseLogged.json();
   const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
 
-  const response = await fetch(`http://localhost:${Ports.Enrouting + _req.url}`);
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting + _req.url}`);
   const productData = await response.json();
   const formattedResponse: GetProducts = JSON.parse(JSON.stringify(productData));
   formattedResponse.logged = formattedResponseLogged.logged;
@@ -50,7 +51,7 @@ router.get("/products", async(_req: Request, res: Response) => {
 
 router.get("/product/:productId", async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
-  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+  const responseLogged = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/checkLogged`, {
     method:"post",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -58,7 +59,7 @@ router.get("/product/:productId", async(_req: Request, res: Response) => {
   const homeData = await responseLogged.json();
   const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
 
-  const response = await fetch(`http://localhost:${Ports.Enrouting}/products/${_req.params.productId}`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/products/${_req.params.productId}`, {
     method: "get",
     headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
@@ -76,7 +77,7 @@ router.get("/product/:productId", async(_req: Request, res: Response) => {
 
 router.get("/products/:productId", async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
-  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+  const responseLogged = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/checkLogged`, {
     method:"post",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -84,7 +85,7 @@ router.get("/products/:productId", async(_req: Request, res: Response) => {
   const homeData = await responseLogged.json();
   const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
 
-  const response = await fetch(`http://localhost:${Ports.Enrouting + _req.url}`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting + _req.url}`, {
     method:"get",
     headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
@@ -101,7 +102,7 @@ router.get("/products/:productId", async(_req: Request, res: Response) => {
 })
 
 router.get("/products/productByName/:name", async(_req: Request, res: Response) => {
-  const response = await fetch(`http://localhost:${Ports.Enrouting + _req.url}`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting + _req.url}`, {
     method: "get",
     headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
@@ -114,7 +115,7 @@ router.get("/products/productByName/:name", async(_req: Request, res: Response) 
 })
 
 router.put("/product/update", AuthService.authUser, async(_req: Request, res:Response) => {
-  const response = await fetch(`http://localhost:${Ports.Enrouting}/product/update`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/product/update`, {
     method:"put",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -127,7 +128,7 @@ router.put("/product/update", AuthService.authUser, async(_req: Request, res:Res
 })
 
 router.delete("/admin/product/:productId", AuthService.authUser, async(_req: Request, res:Response) => {
-  const response = await fetch(`http://localhost:${Ports.Enrouting}/admin/product/${_req.params.productId}`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/admin/product/${_req.params.productId}`, {
     method:"delete",
     headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
@@ -138,16 +139,29 @@ router.delete("/admin/product/:productId", AuthService.authUser, async(_req: Req
   res.send(statusResponse);
 })
 
+router.delete("/admin/transaction/:transactionId", AuthService.authUser, async(_req: Request, res:Response) => {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/admin/transaction/${_req.params.transactionId}`, {
+    method:"delete",
+    headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
+  });
+  const statusResponse = await response.json();
+  res.header("X-version","1");
+  res.header("X-sender","app");
+  res.header("X-destination","interface");
+  res.send(statusResponse);
+})
+
+
 router.get("/transactions", async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
-  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+  const responseLogged = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/checkLogged`, {
     method:"post",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
   const homeData = await responseLogged.json();
   const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
-  const response = await fetch(`http://localhost:${Ports.Enrouting + _req.url}/user/${formattedResponseLogged.userId}`);
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting + _req.url}/user/${formattedResponseLogged.userId}`);
   const transactionData = await response.json();
   const formattedResponse: GetTransactions = JSON.parse(JSON.stringify(transactionData));
   formattedResponse.logged = formattedResponseLogged.logged;
@@ -161,7 +175,7 @@ router.get("/transactions", async(_req: Request, res: Response) => {
 
 router.get("/comprarUnique/:productId", AuthService.authUser, async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
-  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+  const responseLogged = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/checkLogged`, {
     method:"post",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -169,7 +183,7 @@ router.get("/comprarUnique/:productId", AuthService.authUser, async(_req: Reques
   const homeData = await responseLogged.json();
   const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));
 
-  const response = await fetch(`http://localhost:${Ports.Enrouting}/products/${_req.params.productId}`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/products/${_req.params.productId}`, {
     method: "get",
     headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
@@ -186,7 +200,7 @@ router.get("/comprarUnique/:productId", AuthService.authUser, async(_req: Reques
 
 router.get("/comprar", AuthService.authUser, async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
-  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+  const responseLogged = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/checkLogged`, {
     method:"post",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -194,7 +208,7 @@ router.get("/comprar", AuthService.authUser, async(_req: Request, res: Response)
   const homeData = await responseLogged.json();
   const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));
 
-  const response = await fetch(`http://localhost:${Ports.Enrouting}/products`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/products`, {
     method: "get",
     headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
@@ -217,7 +231,7 @@ router.post("/comprar", AuthService.authUser, async(_req: Request, res: Response
   const quantitySelected: number = +_req.body.quantity;
   if(_req.body.name != "-" && quantitySelected > 0)
   {
-    const responseProduct = await fetch(`http://localhost:${Ports.Enrouting}/products/${_req.body.productId}`, {
+    const responseProduct = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/products/${_req.body.productId}`, {
       method: "get",
       headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
     });
@@ -230,7 +244,7 @@ router.post("/comprar", AuthService.authUser, async(_req: Request, res: Response
     else
     {
       _req.body.productId = formattedResponseProduct.productData.productId;
-      const responseUser = await fetch(`http://localhost:${Ports.Enrouting}/user/findByEmail/${_req.session.email}`, {
+      const responseUser = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/user/findByEmail/${_req.session.email}`, {
         method: "get",
         headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
       });
@@ -239,7 +253,7 @@ router.post("/comprar", AuthService.authUser, async(_req: Request, res: Response
       _req.body.userId = formattedResponseUser.userData.userId;
       _req.body.quantity = formattedResponseProduct.productData.quantity - quantitySelected;
       _req.body.quantitySelected = quantitySelected;
-      const response = await fetch(`http://localhost:${Ports.Enrouting}/transaction/comprar`, {
+      const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/transaction/comprar`, {
         method:"post",
         body: JSON.stringify(_req.body),
         headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -259,7 +273,7 @@ router.post("/comprar", AuthService.authUser, async(_req: Request, res: Response
 
 router.get("/venderUnique/:productId", AuthService.authUser, async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
-  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+  const responseLogged = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/checkLogged`, {
     method:"post",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -267,7 +281,7 @@ router.get("/venderUnique/:productId", AuthService.authUser, async(_req: Request
   const homeData = await responseLogged.json();
   const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));
 
-  const response = await fetch(`http://localhost:${Ports.Enrouting}/products/${_req.params.productId}`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/products/${_req.params.productId}`, {
     method: "get",
     headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
@@ -284,7 +298,7 @@ router.get("/venderUnique/:productId", AuthService.authUser, async(_req: Request
 
 router.get("/vender", AuthService.authUser, async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
-  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+  const responseLogged = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/checkLogged`, {
     method:"post",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -293,7 +307,7 @@ router.get("/vender", AuthService.authUser, async(_req: Request, res: Response) 
   const homeData = await responseLogged.json();
   const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));
 
-  const response = await fetch(`http://localhost:${Ports.Enrouting}/products`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/products`, {
     method: "get",
     headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
@@ -314,7 +328,7 @@ router.post("/vender", AuthService.authUser, async(_req: Request, res: Response)
 
   if(_req.body.name != "-" && _req.body.quantity > 0)
   {
-    const responseUser = await fetch(`http://localhost:${Ports.Enrouting}/user/findByEmail/${_req.session.email}`, {
+    const responseUser = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/user/findByEmail/${_req.session.email}`, {
       method: "get",
       headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
     });
@@ -322,7 +336,7 @@ router.post("/vender", AuthService.authUser, async(_req: Request, res: Response)
     const formattedResponseUser: GetUser = JSON.parse(JSON.stringify(userData));
     _req.body.userId = formattedResponseUser.userData.userId;
 
-      const response = await fetch(`http://localhost:${Ports.Enrouting}/transaction/vender`, {
+      const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/transaction/vender`, {
         method:"post",
         body: JSON.stringify(_req.body),
         headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -353,7 +367,7 @@ router.get("/register", async(req: Request, res: Response) => {
 })
 
 router.post("/register", async(req: Request, res: Response) => {
-  const response = await fetch(`http://localhost:${Ports.Enrouting}/user`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/user`, {
     method:"post",
     body: JSON.stringify(req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -380,7 +394,7 @@ router.get("/login", async(req : Request, res : Response) => {
 })
 
 router.post("/login", async(req: Request, res: Response) => {
-  const response = await fetch(`http://localhost:${Ports.Enrouting + req.url}`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting + req.url}`, {
     method:"post",
     body: JSON.stringify(req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -398,7 +412,7 @@ router.post("/login", async(req: Request, res: Response) => {
 })
 
 router.get("/logout", async(_req: Request, res: Response) => {
-  await fetch(`http://localhost:${Ports.Enrouting + _req.url}/${_req.session.email}`, {
+  await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting + _req.url}/${_req.session.email}`, {
       method:"delete",
       headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
     });
@@ -417,7 +431,7 @@ router.get("/logout", async(_req: Request, res: Response) => {
 
 router.get("/users", AuthService.authUser, async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
-  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+  const responseLogged = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/checkLogged`, {
     method:"post",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json"},
@@ -425,7 +439,7 @@ router.get("/users", AuthService.authUser, async(_req: Request, res: Response) =
   const homeData = await responseLogged.json();
   const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
 
-  const response = await fetch(`http://localhost:${Ports.Enrouting + _req.url}`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting + _req.url}`, {
     method: "get",
     headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
@@ -442,7 +456,7 @@ router.get("/users", AuthService.authUser, async(_req: Request, res: Response) =
 
 router.get("/users/:userId/update", AuthService.authUser, async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
-  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+  const responseLogged = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/checkLogged`, {
     method:"post",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -450,7 +464,7 @@ router.get("/users/:userId/update", AuthService.authUser, async(_req: Request, r
   const homeData = await responseLogged.json();
   const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
 
-  const response = await fetch(`http://localhost:${Ports.Enrouting}/users/${_req.params.userId}`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/users/${_req.params.userId}`, {
     method: "get",
     headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
@@ -466,7 +480,7 @@ router.get("/users/:userId/update", AuthService.authUser, async(_req: Request, r
 })
 
 router.put("/users/user/update", AuthService.authUser, async(_req: Request, res: Response) => {
-  const response = await fetch(`http://localhost:${Ports.Enrouting}/user/update`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/user/update`, {
     method:"put",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
@@ -479,7 +493,7 @@ router.put("/users/user/update", AuthService.authUser, async(_req: Request, res:
 
 
 router.delete("/rol/user/:userId", async(req: Request, res: Response) => {
-  const response = await fetch(`http://localhost:${Ports.Enrouting + req.url}`, {
+  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting + req.url}`, {
     method:"delete",
     headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
