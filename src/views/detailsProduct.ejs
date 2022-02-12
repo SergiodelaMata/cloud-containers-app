@@ -48,6 +48,15 @@
                             <label for="image" class="card-title font-weight-bold" style="margin-right:5px;"> URL de la imagen del producto: </label>
                             <input id="image" type="text" value="<%=productData.image%>" required>
                         </div>
+                        <div class="row" style="margin-bottom: 10px;">
+                            <label for="platform" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Plataforma del videojuego: </label>
+                            <input id="platform" name="platform" type="text" value="<%= productData.platform %>" readonly>
+                        </div>
+                        <div class="row" style="margin-bottom: 10px;">
+                            <label for="company" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:5px;"> Nombre de la compañía desarrolladora: </label>
+                            <input id="company" name="company" type="text" value="<%= productData.company %>" readonly>
+                        </div>
+
                     <%} else {%>
                         <div class="row form-inline" style="margin-bottom: 10px;">
                             <label for="productName" class="card-title font-weight-bold" style="margin-right:5px;"> Nombre: </label>
@@ -65,6 +74,15 @@
                             <label for="productPrice" class="card-title font-weight-bold" style="margin-right:5px;"> Precio del producto: </label>
                             <input id="productPrice" class="no-border" type="text" value="<%=productData.price%>">
                         </div>
+                        <div class="row form-inline" style="margin-bottom:10px;">
+                            <label for="productPlatform" class="card-title font-weight-bold" style="margin-right:5px;"> Plataforma del videojuego: </label>
+                            <input id="productPlatform" class="no-border" name="platform" type="text" value="<%= productData.platform %>" readonly>
+                        </div>
+                        <div class="row form-inline" style="margin-bottom:10px;">
+                            <label for="productCompany" class="card-title font-weight-bold" style="margin-right:5px;"> Nombre de la compañía desarrolladora: </label>
+                            <input id="productCompany" class="no-border" name="company" type="text" value="<%= productData.company %>" readonly>
+                        </div>
+                
                     <% } %>
                     
                     <% if(logged && rol == 'user') { %>

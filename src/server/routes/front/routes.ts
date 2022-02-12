@@ -63,11 +63,13 @@ router.get("/product/:productId", async(_req: Request, res: Response) => {
     method: "get",
     headers: {"X-version":"2", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
+
   const productData = await response.json();
   const formattedResponse: GetProduct = JSON.parse(JSON.stringify(productData));
   formattedResponse.logged = formattedResponseLogged.logged;
   formattedResponse.userId = formattedResponseLogged.userId;
   formattedResponse.rol = formattedResponseLogged.rol;
+  console.log(formattedResponse);
 
   res.header("X-version","2");
   res.header("X-sender","app");
