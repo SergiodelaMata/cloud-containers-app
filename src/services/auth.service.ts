@@ -13,5 +13,12 @@ export class AuthService {
 
   public static generateSession(req: Request) {
     req.session.email = req.body.email;
+    req.session.rol = req.session.rol;
+  }
+
+  public static authAdmin(req: Request, res: Response, next: NextFunction) {
+    if (req.session && req.session.email && req.session.rol == "admin") {
+      return next();
+    } else return res.sendStatus(401);
   }
 }

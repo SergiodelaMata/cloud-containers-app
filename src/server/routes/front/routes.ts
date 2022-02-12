@@ -390,6 +390,7 @@ router.post("/login", async(req: Request, res: Response) => {
   const formattedResponse: GetHome = JSON.parse(JSON.stringify(homeData));
   if(formattedResponse.logged)
   {
+    req.body.rol = formattedResponse.rol;
     AuthService.generateSession(req);
   }
   res.header("X-version","1");
@@ -416,7 +417,7 @@ router.get("/logout", async(_req: Request, res: Response) => {
   res.redirect("/");
 })
 
-router.get("/users", AuthService.authUser, async(_req: Request, res: Response) => {
+router.get("/users", AuthService.authAdmin, async(_req: Request, res: Response) => {
   _req.body.email = _req.session.email;
   const responseLogged = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/checkLogged`, {
     method:"post",
