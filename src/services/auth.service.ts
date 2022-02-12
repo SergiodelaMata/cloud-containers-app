@@ -13,7 +13,7 @@ export class AuthService {
 
   public static generateSession(req: Request) {
     req.session.email = req.body.email;
-    req.session.rol = req.session.rol;
+    req.session.rol = req.body.rol;
   }
 
   public static authAdmin(req: Request, res: Response, next: NextFunction) {
