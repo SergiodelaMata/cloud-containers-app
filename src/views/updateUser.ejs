@@ -55,12 +55,12 @@
             <%if(userData.expiredatecreditcard != null){%>
               <div class="row form-inline" style="margin-top: 20px;">
                 <label for="expiredatecreditcard" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Fecha de vencimiento: </label>
-                <input class="border border-dark" id="expiredatecreditcard" name="expiredatecreditcard" type="date" maxlength="7" pattern="[0-9]{4}/[0-9]{2}" placeholder="Año/Mes" value="<%= userData.expiredatecreditcard%>">
+                <input class="border border-dark" id="expiredatecreditcard" name="expiredatecreditcard" type="date" value="<%= userData.expiredatecreditcard%>">
               </div>
             <% } else {%>
               <div class="row form-inline" style="margin-top: 20px;">
                 <label for="expiredatecreditcard" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Fecha de vencimiento: </label>
-                <input class="border border-dark" id="expiredatecreditcard" name="expiredatecreditcard" type="date" maxlength="7" pattern="[0-9]{4}/[0-9]{2}" placeholder="Año/Mes" value="">
+                <input class="border border-dark" id="expiredatecreditcard" name="expiredatecreditcard" type="date" value="">
               </div>
             <% } %>
 
