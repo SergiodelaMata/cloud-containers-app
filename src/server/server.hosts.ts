@@ -1,3 +1,3 @@
 export enum Hosts {
-    Enrouting = "localhost"
+    Enrouting = "cloud-enrouting-v2"
 }
