@@ -11,7 +11,7 @@
     <div class="container" style="text-align: center; margin-top: 10px;">
       <h1>Registro:</h1>
     </div>
-    <div class="container center" style="text-align: center">
+    <div class="container justify-content-center" style="text-align: center">
       <div class="row card col-md-6 mx-auto">
         <form id="form-register">
           <div class="row form-inline" style="margin-top: 20px;">
@@ -33,6 +33,14 @@
           <div class="row form-inline" style="margin-top: 20px;">
             <label for="telephone" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Teléfono(*): </label>
             <input class="border border-dark" id="telephone" name="telephone" type="text" maxlength="9" value="" required>
+          </div>
+          <div class="row form-inline" style="margin-top: 20px;">
+            <label for="creditcard" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Número de Tarjeta de Crédito: </label>
+            <input class="border border-dark" id="creditcard" name="creditcard" type="text" maxlength="16" value="">
+          </div>
+          <div class="row form-inline" style="margin-top: 20px;">
+            <label for="expiredatecreditcard" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Fecha de vencimiento: </label>
+            <input class="border border-dark" id="expiredatecreditcard" name="expiredatecreditcard" type="date" maxlength="7" pattern="[0-9]{4}/[0-9]{2}" placeholder="Año/Mes" value="">
           </div>
           <div class="row form-inline" style="margin-top:20px;">
             <label for="password" class="card-title font-weight-bold" style="margin-left: 20px; margin-right:10px;"> Contraseña(*): </label>
