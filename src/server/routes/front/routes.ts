@@ -7,6 +7,7 @@ import { GetProducts, GetProduct} from "../../../interfaces/product.interface";
 import { GetUsers, GetUser} from "../../../interfaces/user.interface";
 import { GetHome} from "../../../interfaces/home.interface";
 import { AuthService } from "../../../services/auth.service";
+import { GetTransactions } from "../../../interfaces/transaction.interface";
 
 const router: Router = express.Router();
 
@@ -32,7 +33,7 @@ router.get("/products", async(_req: Request, res: Response) => {
     method:"post",
     body: JSON.stringify(_req.body),
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
-});
+  });
   const homeData = await responseLogged.json();
   const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
 
@@ -136,6 +137,27 @@ router.delete("/admin/product/:productId", AuthService.authUser, async(_req: Req
   res.header("X-sender","app");
   res.header("X-destination","interface");
   res.send(statusResponse);
+})
+
+router.get("/transactions", async(_req: Request, res: Response) => {
+  _req.body.email = _req.session.email;
+  const responseLogged = await fetch(`http://localhost:${Ports.Enrouting}/checkLogged`, {
+    method:"post",
+    body: JSON.stringify(_req.body),
+    headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
+  });
+  const homeData = await responseLogged.json();
+  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
+  const response = await fetch(`http://localhost:${Ports.Enrouting + _req.url}/user/${formattedResponseLogged.userId}`);
+  const transactionData = await response.json();
+  const formattedResponse: GetTransactions = JSON.parse(JSON.stringify(transactionData));
+  formattedResponse.logged = formattedResponseLogged.logged;
+  formattedResponse.userId = formattedResponseLogged.userId;
+  formattedResponse.rol = formattedResponseLogged.rol;
+  res.header("X-version","1");
+  res.header("X-sender","app");
+  res.header("X-destination","interface");
+  res.render(`${config.rootFolder}/src/views/transactions.ejs`, formattedResponse);
 })
 
 router.get("/comprarUnique/:productId", AuthService.authUser, async(_req: Request, res: Response) => {
