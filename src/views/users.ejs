@@ -9,33 +9,65 @@
     <!-- BARRA DE NAVEGACIÓN -->
     <%- include("./partials/mainViews/navbar.ejs", {page_name:"Usuarios"}) %>
     <div class="col-xl-12" style="text-align: center; margin-top: 10px; margin-bottom:20px;">
-      <h1>Gestión de usuarios</h1>
+      <h1>Administración de usuarios</h1>
     </div>
     <div class="container" style="align-items: center;">
       <ul class="users-list col-12">
         <h3 class="text-center mt-5">Usuarios administradores</h3>
-        <%userData.forEach(function(user) {%>
-          <%if(user.rol == "admin"){ %>
+        <%let i = 0;
+          userData.forEach(function(user) {%>
+          <%if(user.rol == "admin" && userId != user.userId){ %>
             <li>
               <%= user.name %> <%= user.firstsurname %> <%= user.secondsurname %>  -  <%= user.email %>
               <a class="users-list-link delete-user" userId="<%= user.userId %>"
                 ><i class="far fa-trash-alt"></i
               ></a>
+              <% if(!block[i]){ %>
+                <a class="users-list-link block-user" userEmail="<%= user.email %>">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stop-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3z"/>
+                  </svg>
+                </a>
+              <% } else { %>
+                <a class="users-list-link remove-block-user" userEmail="<%= user.email %>">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-skip-end" viewBox="0 0 16 16">
+                    <path d="M12.5 4a.5.5 0 0 0-1 0v3.248L5.233 3.612C4.713 3.31 4 3.655 4 4.308v7.384c0 .653.713.998 1.233.696L11.5 8.752V12a.5.5 0 0 0 1 0V4zM5 4.633 10.804 8 5 11.367V4.633z"/>
+                  </svg>
+                </a>
+              <% } %>
             </li>
-          <% } %>
+          <% } 
+          i = i + 1;%>
         <% }) %>
       </ul>
       <ul class="users-list col-12">
         <h3 class="text-center mt-5">Usuarios</h3>
-        <%userData.forEach(function(user) {%>
-          <%if(user.rol != "admin"){ %>
+        <%let j = 0;
+        userData.forEach(function(user) {%>
+          <%if(user.rol != "admin" && userId != user.userId){ %>
             <li>
               <%= user.name %> <%= user.firstsurname %> <%= user.secondsurname %>  -  <%= user.email %>
               <a class="users-list-link delete-user" userId="<%= user.userId %>"
                 ><i class="far fa-trash-alt"></i
               ></a>
+              <%if(!block[j]){ %>
+                <a class="users-list-link block-user" userEmail="<%= user.email %>">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stop-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3z"/>
+                  </svg>
+                </a>
+              <% } else { %>
+                <a class="users-list-link remove-block-user" userEmail="<%= user.email %>">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-skip-end" viewBox="0 0 16 16">
+                    <path d="M12.5 4a.5.5 0 0 0-1 0v3.248L5.233 3.612C4.713 3.31 4 3.655 4 4.308v7.384c0 .653.713.998 1.233.696L11.5 8.752V12a.5.5 0 0 0 1 0V4zM5 4.633 10.804 8 5 11.367V4.633z"/>
+                  </svg>
+                </a>
+              <% } %>
             </li>
-          <% } %>
+          <% } 
+          j = j + 1;%>
         <% }) %>
       </ul>
     </div>

@@ -4,9 +4,13 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const formData = formSerializer(event);
   const statusRegister = await postRequest("/login", formData);
-  if(statusRegister.logged)
+  if(statusRegister.logged && !statusRegister.block)
   {
     window.location.href = "/";
+  }
+  else if(statusRegister.block)
+  {
+    alert("Lo siento, pero su cuenta ha sido bloqueada temporalmente por incumplimiento de las políticas de la página.")
   }
   else
   {

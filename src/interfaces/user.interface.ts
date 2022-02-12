@@ -1,9 +1,11 @@
+import { Block } from "typescript";
+
 export interface GetUsers {
   userData: UserData[] | UserData;
   logged: boolean;
   userId: string;
   rol: string;
-  
+  block: string[] | string;
 }
 
 export interface GetUser {
@@ -11,7 +13,7 @@ export interface GetUser {
   logged: boolean;
   userId: string;
   rol: string;
-  
+  block: string[] | string;
 }
 
 export interface UserData {
