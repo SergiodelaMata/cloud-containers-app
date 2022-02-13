@@ -1,3 +1,3 @@
 export enum Hosts {
-    Enrouting = "cloud-enrouting-v1"
+    Enrouting = "enrouting"
 }
