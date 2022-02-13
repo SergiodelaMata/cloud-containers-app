@@ -479,17 +479,4 @@ router.put("/users/user/update", AuthService.authUser, async(_req: Request, res:
   res.send(await response.json());
 })
 
-
-router.delete("/rol/user/:userId", async(req: Request, res: Response) => {
-  const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting + req.url}`, {
-    method:"delete",
-    headers: {"X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
-  });
-  res.header("X-version","1");
-  res.header("X-sender","app");
-  res.header("X-destination","interface");
-  res.send(await response.json());
-});
-
-
 export default router;
