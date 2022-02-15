@@ -19,6 +19,7 @@ router.get("/", async(_req: Request, res: Response) => {
     headers: {"Content-Type": "application/json", "X-version":"1", "X-sender-service":"app", "X-destination-service":"enrouting"},
 });
   const homeData = await response.json();
+  console.log("home1: " + homeData);
   const formattedResponse: GetHome = JSON.parse(JSON.stringify(homeData));
  
   res.header("X-version","1");
