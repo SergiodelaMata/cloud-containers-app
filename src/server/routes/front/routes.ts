@@ -5,7 +5,7 @@ import {Ports} from "../../server.ports";
 import {Hosts} from "../../server.hosts";
 import { GetProducts, GetProduct} from "../../../interfaces/product.interface";
 import { GetUsers, GetUser, UserData} from "../../../interfaces/user.interface";
-import { GetHome} from "../../../interfaces/home.interface";
+import { GetHome, GetHomeAux} from "../../../interfaces/home.interface";
 import { AuthService } from "../../../services/auth.service";
 import { GetTransactions } from "../../../interfaces/transaction.interface";
 
@@ -20,7 +20,8 @@ router.get("/", async(_req: Request, res: Response) => {
 });
   const homeData = await response.json();
   console.log("home2: " + homeData);
-  const formattedResponse: GetHome = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseAux: GetHomeAux = JSON.parse(JSON.stringify(homeData));
+  const formattedResponse: GetHome = {logged:formattedResponseAux.logged, userId: formattedResponseAux.userId, rol: formattedResponseAux.rol, block: false};
  
   res.header("X-version","2");
   res.header("X-sender","app");
@@ -36,7 +37,8 @@ router.get("/products", async(_req: Request, res: Response) => {
     headers: {"Content-Type": "application/json", "X-version":"2", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
   const homeData = await responseLogged.json();
-  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
+  const formattedResponseLoggedAux: GetHomeAux = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseLogged: GetHome = {logged:formattedResponseLoggedAux.logged, userId: formattedResponseLoggedAux.userId, rol: formattedResponseLoggedAux.rol, block: false};
 
   const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting + _req.url}`);
   const productData = await response.json();
@@ -58,7 +60,8 @@ router.get("/product/:productId", async(_req: Request, res: Response) => {
     headers: {"Content-Type": "application/json", "X-version":"2", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
   const homeData = await responseLogged.json();
-  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
+  const formattedResponseLoggedAux: GetHomeAux = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseLogged: GetHome = {logged:formattedResponseLoggedAux.logged, userId: formattedResponseLoggedAux.userId, rol: formattedResponseLoggedAux.rol, block: false};
 
   const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/products/${_req.params.productId}`, {
     method: "get",
@@ -86,7 +89,8 @@ router.get("/products/:productId", async(_req: Request, res: Response) => {
     headers: {"Content-Type": "application/json", "X-version":"2", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
   const homeData = await responseLogged.json();
-  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
+  const formattedResponseLoggedAux: GetHomeAux = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseLogged: GetHome = {logged:formattedResponseLoggedAux.logged, userId: formattedResponseLoggedAux.userId, rol: formattedResponseLoggedAux.rol, block: false};
 
   const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting + _req.url}`, {
     method:"get",
@@ -163,7 +167,9 @@ router.get("/transactions", AuthService.authUser, async(_req: Request, res: Resp
     headers: {"Content-Type": "application/json", "X-version":"2", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
   const homeData = await responseLogged.json();
-  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
+  const formattedResponseLoggedAux: GetHomeAux = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseLogged: GetHome = {logged:formattedResponseLoggedAux.logged, userId: formattedResponseLoggedAux.userId, rol: formattedResponseLoggedAux.rol, block: false};
+
   const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting + _req.url}/user/${formattedResponseLogged.userId}`);
   const transactionData = await response.json();
   const formattedResponse: GetTransactions = JSON.parse(JSON.stringify(transactionData));
@@ -184,7 +190,8 @@ router.get("/comprarUnique/:productId", AuthService.authUser, async(_req: Reques
     headers: {"Content-Type": "application/json", "X-version":"2", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
   const homeData = await responseLogged.json();
-  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseLoggedAux: GetHomeAux = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseLogged: GetHome = {logged:formattedResponseLoggedAux.logged, userId: formattedResponseLoggedAux.userId, rol: formattedResponseLoggedAux.rol, block: false};
 
   const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/products/${_req.params.productId}`, {
     method: "get",
@@ -209,7 +216,8 @@ router.get("/comprar", AuthService.authUser, async(_req: Request, res: Response)
     headers: {"Content-Type": "application/json", "X-version":"2", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
   const homeData = await responseLogged.json();
-  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseLoggedAux: GetHomeAux = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseLogged: GetHome = {logged:formattedResponseLoggedAux.logged, userId: formattedResponseLoggedAux.userId, rol: formattedResponseLoggedAux.rol, block: false};
 
   const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/products`, {
     method: "get",
@@ -283,7 +291,8 @@ router.get("/venderUnique/:productId", AuthService.authUser, async(_req: Request
     headers: {"Content-Type": "application/json", "X-version":"2", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
   const homeData = await responseLogged.json();
-  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseLoggedAux: GetHomeAux = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseLogged: GetHome = {logged:formattedResponseLoggedAux.logged, userId: formattedResponseLoggedAux.userId, rol: formattedResponseLoggedAux.rol, block: false};
 
   const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/products/${_req.params.productId}`, {
     method: "get",
@@ -309,7 +318,8 @@ router.get("/vender", AuthService.authUser, async(_req: Request, res: Response) 
   });
 
   const homeData = await responseLogged.json();
-  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseLoggedAux: GetHomeAux = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseLogged: GetHome = {logged:formattedResponseLoggedAux.logged, userId: formattedResponseLoggedAux.userId, rol: formattedResponseLoggedAux.rol, block: false};
 
   const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/products`, {
     method: "get",
@@ -363,6 +373,7 @@ router.get("/register", async(req: Request, res: Response) => {
     logged : false,
     userId : false,
     rol : null,
+    block : false,
   }
   const formattedResponse: GetHome = JSON.parse(JSON.stringify(response));
   res.header("X-version","2");
@@ -389,7 +400,8 @@ router.get("/login", async(req : Request, res : Response) => {
   const response = {
     logged : false,
     userId : false,
-    rol : null
+    rol : null,
+    block : false,
   }
   const formattedResponse: GetHome = JSON.parse(JSON.stringify(response));
   res.header("X-version","2");
@@ -405,7 +417,8 @@ router.post("/login", async(req: Request, res: Response) => {
     headers: {"Content-Type": "application/json", "X-version":"2", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
   const homeData = await response.json();
-  const formattedResponse: GetHome = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseAux: GetHomeAux = JSON.parse(JSON.stringify(homeData));
+  const formattedResponse: GetHome = {logged:formattedResponseAux.logged, userId: formattedResponseAux.userId, rol: formattedResponseAux.rol, block: false};
 
   const responseUser = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/users/${formattedResponse.userId}`, {
       method: "get",
@@ -459,7 +472,8 @@ router.get("/users", AuthService.authAdmin, async(_req: Request, res: Response) 
     headers: {"Content-Type": "application/json"},
   });
   const homeData = await responseLogged.json();
-  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
+  const formattedResponseLoggedAux: GetHomeAux = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseLogged: GetHome = {logged:formattedResponseLoggedAux.logged, userId: formattedResponseLoggedAux.userId, rol: formattedResponseLoggedAux.rol, block: false};
 
   const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting + _req.url}`, {
     method: "get",
@@ -527,7 +541,8 @@ router.get("/users/:userId/update", AuthService.authUser, async(_req: Request, r
     headers: {"Content-Type": "application/json", "X-version":"2", "X-sender-service":"app", "X-destination-service":"enrouting"},
   });
   const homeData = await responseLogged.json();
-  const formattedResponseLogged: GetHome = JSON.parse(JSON.stringify(homeData));  
+  const formattedResponseLoggedAux: GetHomeAux = JSON.parse(JSON.stringify(homeData));
+  const formattedResponseLogged: GetHome = {logged:formattedResponseLoggedAux.logged, userId: formattedResponseLoggedAux.userId, rol: formattedResponseLoggedAux.rol, block: false};
 
   const response = await fetch(`http://${Hosts.Enrouting}:${Ports.Enrouting}/users/${_req.params.userId}`, {
     method: "get",
